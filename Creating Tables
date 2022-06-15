@@ -1,0 +1,106 @@
+CREATING TABLES 
+
+ /*1. Customer Table */
+
+
+CREATE TABLE Customer(
+Cust_ID int PRIMARY KEY AUTO_INCREMENT, 
+C_Name varchar(255),
+C_Address varchar(255),
+C_Contact varchar(10)
+);
+
+/* 2. Drug Manufacturer Table*/
+
+CREATE TABLE Drug_Manufacturer(
+Comapany_ID int PRIMARY KEY AUTO_INCREMENT, 
+Company_Name varchar(225)
+);
+
+/* 3. Doctor Table*/
+
+CREATE TABLE Doctor(
+Doc_ID int PRIMARY KEY AUTO_INCREMENT, 
+Doc_Name varchar(225),
+Doc_Contact varchar(10),
+Doc_Specialisation varchar(225)
+);
+
+/* 4. Employee Table*/
+
+CREATE TABLE Employee(
+Employee_ID int PRIMARY KEY AUTO_INCREMENT, 
+Employee_Name varchar(225),
+Employee_Contact varchar(10)
+);
+
+/* 5. Sale Transaction Table*/
+
+CREATE TABLE Sale_Transaction(
+Sale_ID int PRIMARY KEY AUTO_INCREMENT, 
+Employee_ID  int,
+Date_of_Transaction date,
+foreign key(Employee_ID) references Employee(Employee_ID)
+);
+
+/* 6. Purchase Table*/
+
+CREATE TABLE Purchase(
+Purchase_ID int PRIMARY KEY AUTO_INCREMENT, 
+Date_of_purchase date
+);
+
+/* 7. Drug Table*/
+
+CREATE TABLE Drug(
+Drug_ID int PRIMARY KEY AUTO_INCREMENT, 
+Drug_Name varchar(225),
+Cost_price int,
+Discount_Precent int,
+MRP int,
+Company_ID int,
+Expiry date,
+foreign key(Company_ID) references Drug_Manufacturer(Comapany_ID)
+);
+
+/* 8. Sells Table*/
+
+CREATE TABLE Sells(
+Sale_ID int , 
+Drug_ID int,
+Cust_ID int,
+Quantity int,
+foreign key(Sale_ID) references Sale_Transaction(Sale_ID),
+foreign key(Drug_ID) references Drug(Drug_ID),
+foreign key(Cust_ID) references Customer(Cust_ID)
+);
+
+/* 9. Prescribes Table*/
+
+CREATE TABLE Prescribes(
+Doc_ID int,
+Drug_ID int,
+Cust_ID int,
+foreign key(Doc_ID) references Doctor(Doc_ID),
+foreign key(Drug_ID) references Drug(Drug_ID),
+foreign key(Cust_ID) references Customer(Cust_ID)
+);
+
+/* 10. Distributor Table*/
+
+CREATE TABLE Distributor(
+Distributor_ID int PRIMARY KEY AUTO_INCREMENT, 
+Distributor_Contact varchar(10)
+);
+
+/* 11. Supplies Relation*/
+
+CREATE TABLE Supplies(
+Purchase_ID int,
+Distributor_ID int,
+Drug_ID int,
+Quantity int,
+foreign key(Purchase_ID) references Purchase(Purchase_ID),
+foreign key(Distributor_ID) references Distributor(Distributor_ID),
+foreign key(Drug_ID) references Drug(Drug_ID)
+);
